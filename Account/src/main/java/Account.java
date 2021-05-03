@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Account {
@@ -10,6 +11,10 @@ public class Account {
 
     public Account(User user) {
         this.user = user;
+        friends = new ArrayList<>();
+        blockUsers = new ArrayList<>();
+        chats = new ArrayList<>();
+        gifts = new ArrayList<>();
     }
 
     public List<Account> getFriends() {
@@ -60,9 +65,13 @@ public class Account {
         gallery.addPhoto(message.getImage());
     }
 
-    public void blockUser(Account account) {
+    public boolean blockUser(Account account) {
         if (!blockUsers.contains(account)) {
+            deleteFromFriend(account);
             this.blockUsers.add(account);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -70,9 +79,12 @@ public class Account {
         this.blockUsers.remove(account);
     }
 
-    public void addToFriends(Account account) {
+    public boolean addToFriends(Account account) {
         if (!friends.contains(account)) {
             this.friends.add(account);
+            return true;
+        } else {
+            return false;
         }
     }
 
